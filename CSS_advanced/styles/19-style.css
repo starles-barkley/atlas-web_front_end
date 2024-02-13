@@ -516,6 +516,16 @@
     margin-right: auto;
   }
 
+  .footer ul {
+    text-align: right;
+}
+
+.footer-copyright {
+    margin: 0;
+    font-size: var(--font-size-small);
+    color: var(--text-color);
+}
+
   .footer {
     padding: var(--footer-padding);
   }
