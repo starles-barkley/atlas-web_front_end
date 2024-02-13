@@ -542,11 +542,10 @@
   }
 
   .card-work .card-inner {
-	position: absolute;
-	top: -0.1rem;
-	left: -0.1rem;
-	right: -0.1rem;
-	z-index: 1;
+    position: absolute;
+    top: -0.1rem; left: -0.1rem; right: -0.1rem;
+    z-index: 1;
+    transition: var(--transition-duration) var(--transition-cubic-bezier);
   }
 
   .card-work:hover .card-inner {
@@ -581,11 +580,11 @@
   }
 
   .button:hover {
-	color: var(--button-hover-color);
-	text-decoration: var(--button-hover-text-decoration);
-	background-color: var(--button-hover-background);
-    transition: color var(--transition-duration) var(--transition-cubic-bezier), background-color var(--transition-duration) var(--transition-cubic-bezier);
-}
+    color: var(--button-hover-color);
+    text-decoration: var(--button-hover-text-decoration);
+    background-color: var(--button-hover-background);
+    transition-duration: var(--transition-duration);
+    transition-property: color, background-color;
   }
   
   .section {
