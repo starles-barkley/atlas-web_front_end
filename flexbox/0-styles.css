@@ -182,15 +182,10 @@
       ============================= */
   
   ul.row {
+    display: flex;
     margin: 0;
     padding: 0;
     list-style: none;
-  }
-  
-  .row::after {
-    content: '';
-    display: table;
-    clear: both;
   }
   
   [class*='col-'] {
