@@ -1,9 +1,10 @@
 /* Create variable for text color */
+$text-color: #3D3D3D;
 
-$text-color: #3D3D3D
+body {
+    color: $text-color;
+}
 
-body
-  color: $text-color
-
-p
-  color: $text-color
+p {
+    color: $text-color;
+}
