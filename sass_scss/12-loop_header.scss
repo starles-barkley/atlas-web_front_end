@@ -4,4 +4,8 @@ h1 must have font size equal to 1px, h2 must have font size equal to 2px, etc.
 You must create H* tags from 1 to 5
 You must use @for statement */
 
-i
+@for $i from 1 through 5 {
+  h#{$i} {
+    font-size: #{$i}px;
+  }
+}
