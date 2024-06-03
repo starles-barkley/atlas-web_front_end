@@ -180,6 +180,10 @@
   
   /* Grid
       ============================= */
+
+  .row {
+    display: flex;
+  }
   
   ul.row {
     display: flex;
