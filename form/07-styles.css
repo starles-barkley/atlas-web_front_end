@@ -827,7 +827,7 @@ textarea:valid:not(:placeholder-shown) {
     padding: 0;
   }
 
-  .form-search .search-icon {
+  .search-button .search-icon {
     fill: var(--color-white);
     width: 1.5rem;
     height: 1.5rem;
@@ -853,7 +853,7 @@ textarea:valid:not(:placeholder-shown) {
     position: relative;
     width: 15rem;
     z-index: 1;
-    border-bottom: 1rem solid var(--color-grey);
+    border-bottom: .1rem solid var(--color-grey);
     padding: 0;
     cursor: text;
     margin: 0 1rem;
