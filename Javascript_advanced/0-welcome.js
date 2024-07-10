@@ -1,3 +1,7 @@
-function welcome(firstname, lastname) {
-   const fullName = `{firstName} {lastName}`;
+function welcome(firstName, lastName) {
+   const fullName = `${firstName} ${lastName}`;
+   function displayFullName() {
+       alert(`Welcome ${fullName}!`);
+   }
+   displayFullName();
 }
