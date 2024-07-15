@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>0-index.html</title>
+    <title>1-index.html</title>
   </head>
 
   <body>
@@ -20,12 +20,12 @@
     function setCookies() {
       const expiry = new Date();
       expiry.setDate(expiry.getDate() + 10);
-      
+
       const firstname = document.getElementById('Firstname').value;
       const email = document.getElementById('Email').value;
 
-      document.cookie = `Firstname=${Firstname}; path=/`;
-      document.cookie = `Email=${Email}; path=/`;
+      document.cookie = `Firstname=${firstname}; path=/`;
+      document.cookie = `Email=${email}; path=/`;
     }
 
     function showCookies() {
