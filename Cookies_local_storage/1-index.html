@@ -24,8 +24,8 @@
       const firstname = document.getElementById('Firstname').value;
       const email = document.getElementById('Email').value;
 
-      document.cookie = `Firstname=${firstname}; path=/`;
-      document.cookie = `Email=${email}; path=/`;
+      document.cookie = `Firstname=${firstname}; path=/; expires=${expiry.toUTCString()}`;
+      document.cookie = `Email=${email}; path=/; expires=${expiry.toUTCString()}`;
     }
 
     function showCookies() {
@@ -36,7 +36,7 @@
       }, {});
 
       const p = document.createElement('p');
-      p.innerHTML = `Cookies: Firstname=${cookies.firstname}, Email=${cookies.email}`;
+      p.innerHTML = `Cookies: Firstname=${cookies.Firstname}, Email=${cookies.Email}`;
       document.body.appendChild(p);
     }
   </script>
