@@ -7,7 +7,7 @@
   </head>
 
   <body>
-    <div>
+    <div id="form">
       <h2>Login to Website</h2>
       <input type="text" placeholder="Firstname" id="Firstname">
       <input type="email" placeholder="Email" id="Email">
@@ -19,21 +19,13 @@
     function setCookies() {
       const expiry = new Date();
       expiry.setDate(expiry.getDate() + 10);
-      
+
       const firstname = document.getElementById('Firstname').value;
       const email = document.getElementById('Email').value;
 
-      document.cookie = `Firstname=${firstname}; path=/`;
-      document.cookie = `Email=${email}; path=/`;
-    }
-
-    function showCookies() {
-      const firstname = getCookie('Firstname');
-      const email = getCookie('Email');
-
-      const p = document.createElement('p');
-      p.innerHTML = `Email: ${email} - Firstname: ${firstname}`;
-      document.body.appendChild(p);
+      document.cookie = `Firstname=${firstname}; expires=${expiry.toUTCString()}; path=/`;
+      document.cookie = `Email=${email}; expires=${expiry.toUTCString()}; path=/`;
+      showWelcomeMessageOrForm();
     }
 
     function getCookie(name) {
@@ -45,51 +37,52 @@
 
       return cookies[name] || '';
     }
-    
-    function showForm() {
-        const formContainer = document.getElementById('form-container');
-        if (formContainer) {
-          formContainer.style.display = 'block';
-        }
-        const welcomeMessage = document.getElementById('welcome-message');
-        if (welcomeMessage) {
-          welcomeMessage.remove();
-        }
-      }
-      function hideForm() {
-        const formContainer = document.getElementById('form-container');
-        if (formContainer) {
-          formContainer.style.display = 'none';
-        }
-      }
 
-      function deleteCookiesAndShowForm() {
-        document.cookie = 'Firstname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = 'Email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    function showForm() {
+      const form = document.getElementById('form');
+      if (form) {
+        form.style.display = 'block';
+      }
+      const welcomeMessage = document.getElementById('welcome-message');
+      if (welcomeMessage) {
+        welcomeMessage.remove();
+      }
+    }
+
+    function hideForm() {
+      const form = document.getElementById('form');
+      if (form) {
+        form.style.display = 'none';
+      }
+    }
+
+    function deleteCookiesAndShowForm() {
+      document.cookie = 'Firstname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      document.cookie = 'Email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      showForm();
+    }
+
+    function showWelcomeMessageOrForm() {
+      const firstname = getCookie('Firstname');
+      if (firstname) {
+        hideForm();
+        const welcomeMessage = document.createElement('div');
+        welcomeMessage.id = 'welcome-message';
+        welcomeMessage.innerHTML = `
+          <h1>Welcome ${firstname} 
+            <a href="#" id="logout" style="font-weight: normal; font-style: italic; margin-left: 10px;">(logout)</a>
+          </h1>
+        `;
+        document.body.appendChild(welcomeMessage);
+
+        document.getElementById('logout').onclick = function() {
+          deleteCookiesAndShowForm();
+        };
+      } else {
         showForm();
       }
+    }
 
-      function showWelcomeMessageOrForm() {
-        const firstname = getCookie('Firstname');
-        if (firstname) {
-          hideForm();
-          const welcomeMessage = document.createElement('div');
-          welcomeMessage.id = 'welcome-message';
-          welcomeMessage.innerHTML = `
-            <h1>Welcome ${firstname} 
-              <a href="#" id="logout" style="font-weight: normal; font-style: italic; margin-left: 10px;">(logout)</a>
-            </h1>
-          `;
-          document.body.appendChild(welcomeMessage);
-
-          document.getElementById('logout').onclick = function() {
-            deleteCookiesAndShowForm();
-          };
-        } else {
-          showForm();
-        }
-      }
-
-      document.addEventListener('DOMContentLoaded', showWelcomeMessageOrForm);
+    document.addEventListener('DOMContentLoaded', showWelcomeMessageOrForm);
   </script>
 </html>
