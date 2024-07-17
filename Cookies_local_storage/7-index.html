@@ -3,53 +3,103 @@
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>5-index.html</title>
+      <title>7-index.html</title>
   </head>
   <body>
+    
+      <h1>Shopping Cart</h1>
+      <div id="store"></div>
+      <div id="cart"></div>
+
     <script>
       const availableItems = ['Shampoo', 'Soap', 'Sponge', 'Water'];
 
       if (typeof(Storage) === "undefined") {
-          alert("Sorry, your browser does not support Web storage. Try again with a better one.");
+          alert('Sorry, your browser does not support Web storage. Try again with a better one.');
       } else {
           createStore();
           displayCart();
       }
 
+      function getCartFromStorage() {
+          const cart = sessionStorage.getItem('cart');
+          return cart ? JSON.parse(cart) : {};
+      }
+
       function addItemToCart(item) {
-        localStorage.setItem(item, 'true');
+          const cart = getCartFromStorage();
+          cart[item] = (cart[item] || 0) + 1;
+          sessionStorage.setItem('cart', JSON.stringify(cart));
+          displayCart();
+      }
+
+      function removeItemFromCart(item) {
+          const cart = getCartFromStorage();
+          delete cart[item];
+          sessionStorage.setItem('cart', JSON.stringify(cart));
+          displayCart();
+      }
+
+      function clearCart() {
+          sessionStorage.clear();
+          displayCart();
       }
 
       function createStore() {
-        const ul = document.createElement('ul');
-        document.body.appendChild(ul);
+          const storeDiv = document.getElementById('store');
+          const header = document.createElement('h2');
+          header.innerText = 'Available products:';
+          storeDiv.appendChild(header);
 
-        availableItems.forEach(item => {
-          const li = document.createElement('li');
-          li.textContent = item;
-
-          li.addEventListener('click', () => addItemToCart(item));
-
-          ul.appendChild(li);
-        });
+          const list = document.createElement('ul');
+          availableItems.forEach(item => {
+              const listItem = document.createElement('li');
+              listItem.innerText = item;
+              listItem.addEventListener('click', () => addItemToCart(item));
+              list.appendChild(listItem);
+          });
+          storeDiv.appendChild(list);
       }
 
       function displayCart() {
-          const cartItems = [];
+          const cartDiv = document.getElementById('cart');
+          cartDiv.innerHTML = '';
+          
+          const header = document.createElement('h2');
+          header.innerText = 'Your cart:';
+          cartDiv.appendChild(header);
 
-          for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (localStorage.getItem(key) === 'true') {
-              cartItems.push(key);
-            }
-          }
+          const clearCartButton = document.createElement('button');
+          clearCartButton.innerText = 'Clear my cart';
+          clearCartButton.addEventListener('click', clearCart);
+          cartDiv.appendChild(clearCartButton);
 
-          if (cartItems.length > 0) {
-            const p = document.createElement('p');
-            p.textContent = `You previously had ${cartItems.length} items in your cart`;
-            document.body.appendChild(p);
-          }
+          const cartContent = document.createElement('div');
+          cartDiv.appendChild(cartContent);
+
+          updateCart(cartContent);
       }
+
+      function updateCart(cartContent) {
+        const cart = getCartFromStorage();
+        cartContent.innerHTML = '';
+
+        const list = document.createElement('ul');
+        const items = Object.keys(cart);
+
+        if (items.length === 0) {
+            const listItem = document.createElement('li');
+            listItem.innerText = 'Your cart is empty';
+            list.appendChild(listItem);
+        } else {
+            items.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `${item} x ${cart[item]} <button onclick="removeItemFromCart('${item}')">Remove</button>`;
+                list.appendChild(listItem);
+            });
+        }
+        cartContent.appendChild(list);
+    }
     </script>
   </body>
 </html>
